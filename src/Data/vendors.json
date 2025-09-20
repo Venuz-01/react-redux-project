@@ -1,14 +1,17 @@
+
 [
   {
     "id": "v1",
-    "name": "Saiqa Fashion",
-    "email": "contact@saiqafashion.com",
-    "products": ["p1"]
-  },
-  {
-    "id": "v2",
-    "name": "ElectroZone",
-    "email": "sales@electrozone.com",
-    "products": ["p2"]
+    "username": "Venugopal",
+    "email": "adicherlavenugopal@gmail.com",
+    "password":"Venu@123",
+    "address": "Street 123",
+    "pincode": "500001",
+    "landmark": "Near Mall",
+    "gender": "Female",
+    "contactNumber": "9999999999",
+    "gstValue": "GST123",
+    "policyId": "P123",
+    "brandName": "SaiqaBrand"
   }
 ]
