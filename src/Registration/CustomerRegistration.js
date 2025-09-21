@@ -1,4 +1,3 @@
-// CustomerRegistration.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,15 +5,16 @@ function CustomerRegistration() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [hoverStep, setHoverStep] = useState(null);
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
     address: "",
     pincode: "",
-    landmark: "",
     gender: "",
     contactNumber: "",
+    profilePic: "https://img.freepik.com/premium-photo/3d-cartoon-avatar-man-minimal-3d-character-avatar-profile_652053-2067.jpg"
   });
 
   const handleChange = (e) => {
@@ -24,7 +24,7 @@ function CustomerRegistration() {
 
   const requiredFields = {
     1: ["username", "email", "password"],
-    2: ["address", "pincode", "landmark"],
+    2: ["address", "pincode"],
     3: ["gender", "contactNumber"],
   };
 
@@ -50,33 +50,45 @@ function CustomerRegistration() {
     setCurrentStep(step);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     for (let key in formData) {
       if (!formData[key] || !formData[key].toString().trim()) {
         return alert(`Please fill the ${key}`);
       }
     }
 
-    const normalizedEmail = formData.email.trim().toLowerCase();
-    const customers = JSON.parse(localStorage.getItem("customers") || "[]");
+    try {
+      const resGet = await fetch("http://localhost:3002/customers");
+      const existingCustomers = await resGet.json();
 
-    if (customers.some((c) => c.email.toLowerCase() === normalizedEmail)) {
-      return alert("Email already registered!");
+      let nextId = 1;
+      if (existingCustomers.length > 0) {
+        const maxId = Math.max(...existingCustomers.map((c) => Number(c.id) || 0));
+        nextId = maxId + 1;
+      }
+
+      const newCustomer = {
+        id: nextId.toString(),
+        ...formData,
+        username: formData.username.trim(),
+        email: formData.email.trim().toLowerCase(),
+        password: formData.password.trim(),
+      };
+
+      const res = await fetch("http://localhost:3002/customers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newCustomer),
+      });
+
+      if (!res.ok) throw new Error("Failed to register");
+
+      alert("Customer registered successfully!");
+      navigate("/customer-login");
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Registration failed. Try again.");
     }
-
-    const newCustomer = {
-      id: `c${customers.length + 1}`,
-      ...Object.fromEntries(
-        Object.entries(formData).map(([k, v]) => [k, typeof v === "string" ? v.trim() : v])
-      ),
-    };
-    newCustomer.email = normalizedEmail;
-
-    customers.push(newCustomer);
-    localStorage.setItem("customers", JSON.stringify(customers));
-
-    alert("Customer registered successfully! Redirecting to login...");
-    navigate("/customer-login");
   };
 
   const stepContent = (step, readOnly = false) => {
@@ -97,6 +109,15 @@ function CustomerRegistration() {
               <label>Password</label>
               <input type="password" name="password" value={formData.password} onChange={handleChange} {...inputProps} className="form-control" />
             </div>
+            {formData.profilePic && (
+              <div className="mb-3 text-center">
+                <img
+                  src={formData.profilePic}
+                  alt="Profile"
+                  style={{ width: "100px", height: "100px", borderRadius: "50%", objectFit: "cover" }}
+                />
+              </div>
+            )}
           </>
         );
       case 2:
@@ -110,10 +131,6 @@ function CustomerRegistration() {
               <label>Pincode</label>
               <input type="text" name="pincode" value={formData.pincode} onChange={handleChange} {...inputProps} className="form-control" />
             </div>
-            <div className="mb-2">
-              <label>Landmark</label>
-              <input type="text" name="landmark" value={formData.landmark} onChange={handleChange} {...inputProps} className="form-control" />
-            </div>
           </>
         );
       case 3:
@@ -122,7 +139,7 @@ function CustomerRegistration() {
             <div className="mb-2">
               <label>Gender</label>
               <select name="gender" value={formData.gender} onChange={handleChange} {...inputProps} className="form-control">
-                <option value="">Select</option>
+                <option value="">Select Gender</option>
                 <option>Male</option>
                 <option>Female</option>
                 <option>Other</option>
@@ -140,21 +157,22 @@ function CustomerRegistration() {
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "500px" }}>
-      <h3 className="mb-3 text-center">Customer Registration</h3>
-
+    <div className="container mt-5" style={{ maxWidth: "600px" }}>
       {/* Stepper */}
-      <div className="d-flex mb-3 justify-content-between position-relative">
+      <div className="d-flex mb-4 justify-content-between position-relative">
         {[1, 2, 3].map((s) => (
           <div
             key={s}
-            className="stepper-item p-2 text-center"
+            className="stepper-item text-center"
             style={{
               flex: 1,
-              backgroundColor: currentStep === s ? "gray" : currentStep > s ? "green" : "lightgray",
-              borderRadius: "5px",
+              backgroundColor: currentStep === s ? "#6c757d" : currentStep > s ? "#28a745" : "#e0e0e0",
+              borderRadius: "8px",
               cursor: "pointer",
               position: "relative",
+              padding: "12px 0",
+              margin: "0 4px",
+              transition: "all 0.3s",
             }}
             onClick={() => handleStepClick(s)}
             onMouseEnter={() => setHoverStep(s)}
@@ -162,7 +180,21 @@ function CustomerRegistration() {
           >
             Step {s}
             {hoverStep === s && (
-              <div className="position-absolute bg-white border p-2" style={{ top: "110%", left: "0", zIndex: 10, width: "300px" }}>
+              <div
+                className="hover-card"
+                style={{
+                  position: "absolute",
+                  top: "110%",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: "320px",
+                  padding: "15px",
+                  backgroundColor: "#fff",
+                  borderRadius: "8px",
+                  boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
+                  zIndex: 100,
+                }}
+              >
                 {stepContent(s, true)}
               </div>
             )}
@@ -170,12 +202,13 @@ function CustomerRegistration() {
         ))}
       </div>
 
-      <form className="p-3 border rounded shadow-sm" onSubmit={(e) => e.preventDefault()}>
+      {/* Form */}
+      <form className="p-4 border rounded" onSubmit={(e) => e.preventDefault()}>
         {stepContent(currentStep)}
         <div className="d-flex justify-content-between mt-3">
           {currentStep > 1 && <button type="button" className="btn btn-light" onClick={handleBack}>Back</button>}
           {currentStep < 3 && <button type="button" className="btn btn-primary" onClick={handleNext}>Next</button>}
-          {currentStep === 3 && <button type="button" className="btn btn-success w-100" onClick={handleSubmit}>Register</button>}
+          {currentStep === 3 && <button type="button" className="btn btn-success" onClick={handleSubmit}>Register</button>}
         </div>
       </form>
     </div>

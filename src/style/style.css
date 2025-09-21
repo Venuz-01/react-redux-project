@@ -1,24 +1,35 @@
 body {
-font-family: "Caveat", cursive;
+  font-family: "Caveat", cursive;
 }
 
 h1, h2, h3 {
-font-family: "Caveat", cursive;
+  font-family: "Caveat", cursive;
 }
 
- 
+.custom-btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
 
+/* Carousel images */
 .carousel-img {
-  height: 400px;   
-  object-fit: cover; 
-   border-radius: 8px; 
+  max-height: 400px;      
+  max-width: 100%;        
+  width: auto;            
+  height: auto;            
+  display: block;        
+  margin: 0 auto;         
+  object-fit: contain;    
+  background-color: #f8f9fa; 
+  border-radius: 8px;
 }
 
 #mainCarousel {
-  max-width: 1100px;   
-  margin: 20px auto;  
+  max-width: 1100px;
+  margin: 20px auto;
 }
 
+/* Heart (wishlist) icon */
 .heart-icon {
   font-size: 20px;
   color: gray;
@@ -30,7 +41,7 @@ font-family: "Caveat", cursive;
   color: red;
 }
 
-
+/* Wishlist message */
 .wishlist-message {
   max-width: 400px;
   margin: 0 auto 20px auto;
@@ -38,7 +49,18 @@ font-family: "Caveat", cursive;
   font-size: 14px;
   border-radius: 6px;
 }
+
+/* Cart message */
 .cart-message {
   font-size: 13px;
   font-weight: 500;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05); /* slightly bigger */
+  box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.25); /* highlight with shadow */
 }

@@ -1,9 +1,67 @@
-// CustomerDashboard.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import customerProducts from "../Data/CustomerProducts.json";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 
+// Carousel images
+import banner5 from "../images/banner5.jpg";
+import banner6 from "../images/banner6.jpg";
+import banner7 from "../images/banner7.jpg";
+
+// Carousel Component
+function CarouselComp() {
+  return (
+    <div id="mainCarousel" className="carousel slide mt-3" data-bs-ride="carousel">
+      <div className="carousel-inner">
+        <div className="carousel-item active">
+          <img
+            src={banner7}
+            className="d-block w-100"
+            alt="Banner 1"
+            style={{ height: "400px", objectFit: "cover" }}
+          />
+        </div>
+        <div className="carousel-item">
+          <img
+            src={banner6}
+            className="d-block w-100"
+            alt="Banner 2"
+            style={{ height: "400px", objectFit: "cover" }}
+          />
+        </div>
+        <div className="carousel-item">
+          <img
+            src={banner5}
+            className="d-block w-100"
+            alt="Banner 3"
+            style={{ height: "400px", objectFit: "cover" }}
+          />
+        </div>
+      </div>
+
+      <button
+        className="carousel-control-prev"
+        type="button"
+        data-bs-target="#mainCarousel"
+        data-bs-slide="prev"
+      >
+        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Previous</span>
+      </button>
+
+      <button
+        className="carousel-control-next"
+        type="button"
+        data-bs-target="#mainCarousel"
+        data-bs-slide="next"
+      >
+        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Next</span>
+      </button>
+    </div>
+  );
+}
+
+// Customer Dashboard
 function CustomerDashboard() {
   const navigate = useNavigate();
   const [customer, setCustomer] = useState(null);
@@ -11,58 +69,51 @@ function CustomerDashboard() {
   const [search, setSearch] = useState("");
   const [cart, setCart] = useState([]);
   const [saved, setSaved] = useState([]);
-  const [showAll, setShowAll] = useState(true);
+  const [showProfile, setShowProfile] = useState(false);
+
+  const profileRef = useRef(null); // Ref for profile dropdown
 
   useEffect(() => {
     const c = JSON.parse(localStorage.getItem("loggedInCustomer"));
     if (!c) {
-      navigate("/customer-login");
+      navigate("/"); // redirect to Home page if not logged in
       return;
     }
     setCustomer(c);
-    setProducts(customerProducts);
+
+    fetch("http://localhost:3002/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((err) => console.error("Failed to load products", err));
   }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem("loggedInCustomer");
-    navigate("/customer-login");
+    navigate("/"); // redirect to Home page on logout
   };
 
-  const handleAddToCart = (product) => {
-    if (!cart.some((p) => p.id === product.id)) {
-      setCart([...cart, product]);
-    }
-  };
+  const filteredProducts = products.filter((p) =>
+    p.name.toLowerCase().includes(search.toLowerCase())
+  );
 
-  const handleSaveForLater = (product) => {
-    if (!saved.some((p) => p.id === product.id)) {
-      setSaved([...saved, product]);
-    }
-  };
-
-  const handleShowAll = () => {
-    setShowAll(true);
-    setSearch("");
-  };
-
-  const filteredProducts = showAll
-    ? products
-    : products.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
+  // Close profile dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setShowProfile(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   if (!customer) return null;
-
-  // Featured carousel images using URLs
-  const featuredImages = [
-    "https://leelinesourcing.com/wp-content/uploads/2022/11/original_200219061202_5e4cd1b2c5eb3-1024x682.jpg",
-    "https://images.vexels.com/media/users/3/194701/raw/aa72abca784117244de372b5e9926988-online-shopping-slider-template.jpg",
-    "https://i.pinimg.com/originals/51/d3/88/51d38806d50482762c700eca5717a32f.png"
-  ];
 
   return (
     <div>
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-        <span className="navbar-brand">Customer Products</span>
+        <span className="navbar-brand">Welcome, {customer.username}</span>
         <div className="ms-auto d-flex align-items-center gap-3">
           <input
             type="text"
@@ -70,14 +121,8 @@ function CustomerDashboard() {
             style={{ width: "250px" }}
             placeholder="Search products..."
             value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setShowAll(false);
-            }}
+            onChange={(e) => setSearch(e.target.value)}
           />
-          <button className="btn btn-info" onClick={handleShowAll}>
-            All Products
-          </button>
           <button className="btn btn-outline-light position-relative me-2">
             <FaShoppingCart />
             {cart.length > 0 && (
@@ -94,86 +139,61 @@ function CustomerDashboard() {
               </span>
             )}
           </button>
-          <button className="btn btn-danger" onClick={handleLogout}>
-            Logout
-          </button>
+
+          {/* Profile Pic */}
+          <div className="position-relative" ref={profileRef}>
+            <img
+              src="https://img.freepik.com/premium-photo/smiling-cartoon-boy-pink-shirt_1410957-55144.jpg"
+              alt="Profile"
+              className="rounded-circle border border-light"
+              style={{ cursor: "pointer", width: "45px", height: "45px", objectFit: "cover" }}
+              onClick={() => setShowProfile(!showProfile)}
+            />
+            {showProfile && (
+              <div
+                className="position-absolute bg-white text-dark p-3 shadow rounded"
+                style={{ right: 0, top: "55px", minWidth: "200px", zIndex: 1000 }}
+              >
+                <p className="mb-1 fw-bold">{customer.username}</p>
+                <p className="mb-2 text-muted">{customer.email}</p>
+                <button className="btn btn-danger w-100" onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
 
+      {/* Carousel */}
+      <CarouselComp />
+
+      {/* Products */}
       <div className="container mt-4">
-        <h3>Welcome, {customer.username}</h3>
-
-        {/* Carousel */}
-        <div id="featuredCarousel" className="carousel slide my-4" data-bs-ride="carousel">
-          <div className="carousel-inner">
-            {featuredImages.map((url, idx) => (
-              <div key={idx} className={`carousel-item ${idx === 0 ? "active" : ""}`}>
-                <img
-                  src={url}
-                  className="d-block w-100"
-                  style={{ height: "300px", objectFit: "cover", backgroundColor: "#f8f9fa" }}
-                  alt={`Featured ${idx + 1}`}
-                />
-              </div>
-            ))}
-          </div>
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#featuredCarousel"
-            data-bs-slide="prev"
-          >
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#featuredCarousel"
-            data-bs-slide="next"
-          >
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Next</span>
-          </button>
-        </div>
-
-        {/* Products Grid */}
+        <h3>Products</h3>
         <div className="row mt-4">
           {filteredProducts.map((p) => (
             <div key={p.id} className="col-md-4 mb-4">
-              <div className="card h-100 shadow-sm" style={{ transition: "0.3s" }}>
-                <div
-                  style={{
-                    width: "100%",
-                    height: "220px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "#f8f9fa",
-                    overflow: "hidden",
-                  }}
-                >
-                  <img
-                    src={p.image} // Make sure p.image is also a URL
-                    alt={p.name}
-                    style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
-                  />
-                </div>
-                <div className="card-body text-center d-flex flex-column justify-content-between">
-                  <div>
-                    <h5 className="card-title">{p.name}</h5>
-                    <p className="card-text">Price: ${p.price}</p>
-                  </div>
+              <div className="card h-100 shadow-sm">
+                <img
+                  src={p.image}
+                  alt={p.name}
+                  className="card-img-top"
+                  style={{ height: "200px", objectFit: "contain" }}
+                />
+                <div className="card-body text-center">
+                  <h5 className="card-title">{p.name}</h5>
+                  <p className="card-text">Price: ₹{p.price}</p>
                   <div className="d-flex justify-content-center gap-2 mt-3">
                     <button
                       className="btn btn-success btn-sm"
-                      onClick={() => handleAddToCart(p)}
+                      onClick={() => setCart([...cart, p])}
                     >
                       <FaShoppingCart /> Add to Cart
                     </button>
                     <button
                       className="btn btn-warning btn-sm"
-                      onClick={() => handleSaveForLater(p)}
+                      onClick={() => setSaved([...saved, p])}
                     >
                       <FaHeart /> Save
                     </button>
@@ -182,7 +202,7 @@ function CustomerDashboard() {
               </div>
             </div>
           ))}
-          {filteredProducts.length === 0 && <p className="text-center">No products found.</p>}
+          {filteredProducts.length === 0 && <p>No products found.</p>}
         </div>
       </div>
     </div>

@@ -10,24 +10,25 @@ function CustomerLogin() {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const customers = JSON.parse(localStorage.getItem("customers") || "[]");
+    try {
+      const email = loginData.email.trim().toLowerCase();
+      const res = await fetch(`http://localhost:3002/customers?email=${email}`);
+      const customers = await res.json();
 
-    const customer = customers.find(
-      (c) =>
-        c.email.toLowerCase().trim() === loginData.email.toLowerCase().trim() &&
-        c.password.trim() === loginData.password.trim()
-    );
+      if (customers.length === 0 || customers[0].password.trim() !== loginData.password.trim()) {
+        setError("Invalid email or password");
+        return;
+      }
 
-    if (customer) {
-      localStorage.setItem("loggedInCustomer", JSON.stringify(customer));
-      alert("Customer Login Successful!");
-      setError("");
-      navigate("/customer-dashboard"); // ✅ redirect
-    } else {
-      setError("Invalid email or password");
+      localStorage.setItem("loggedInCustomer", JSON.stringify(customers[0]));
+      alert("Login Successful!");
+      navigate("/customer-dashboard");
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong. Try again.");
     }
   };
 

@@ -7,7 +7,7 @@ import ProductsGrid from "./components/ProductsCards";
 import FooterComp from "./components/FooterComp";
 import VendorRegistration from "./Registration/VendorRegistration";
 import CustomerRegistration from "./Registration/CustomerRegistration";
-import Login from "./Registration/Login"; // Vendor Login
+import Login from "./Registration/VendorLogin"; // Vendor Login
 import CustomerLogin from "./Registration/CustomerLogin";   // ✅ Added
 import VendorDashboard from "./Dashboards/VendorDashboard";
 import CustomerDashboard from "./Dashboards/CustomerDashboard"; // ✅ Added
