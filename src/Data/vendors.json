@@ -1,7 +1,7 @@
 {
   "vendors": [
     {
-      "id": 1,
+      "id": "1",
       "username": "VenuGopal",
       "email": "adicherlavenugopal@gmail.com",
       "password": "venu@123",
@@ -13,6 +13,20 @@
       "gstValue": "90",
       "policyId": "9",
       "brandName": "RedBull"
+    },
+    {
+      "id": 2,
+      "username": "prasanth",
+      "email": "prasanthpoluparthi139@gmail.com",
+      "password": "123456789",
+      "address": "216",
+      "pincode": "534164",
+      "landmark": "street",
+      "gender": "Male",
+      "contactNumber": "7856936212",
+      "gstValue": "785",
+      "policyId": "787569536",
+      "brandName": "Puma"
     }
   ],
   "products": [
