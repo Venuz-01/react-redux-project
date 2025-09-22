@@ -1,7 +1,7 @@
 {
   "vendors": [
     {
-      "id": 1,
+      "id": "1",
       "username": "VenuGopal",
       "email": "adicherlavenugopal@gmail.com",
       "password": "venu@123",
@@ -13,6 +13,64 @@
       "gstValue": "90",
       "policyId": "9",
       "brandName": "RedBull"
+    },
+    {
+      "id": "2",
+      "username": "saiqa maqbool",
+      "email": "maqboolsaiqa@gmail.com",
+      "password": "my@password",
+      "address": "pulwama",
+      "pincode": "45678",
+      "landmark": "near college",
+      "gender": "Female",
+      "contactNumber": "34567789",
+      "gstValue": "345678",
+      "policyId": "76",
+      "brandName": "shookeni",
+      "products": [
+        {
+          "name": "sharara set",
+          "price": "5678",
+          "image": "https://m.media-amazon.com/images/I/81cxVrPeeiL._SX522_.jpg",
+          "id": 9,
+          "vendorId": "2"
+        },
+        {
+          "name": "sharara set",
+          "price": "400",
+          "image": "https://m.media-amazon.com/images/I/616kViYpgpL._SX522_.jpg",
+          "id": 10,
+          "vendorId": "2"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "username": "new user",
+      "email": "newuser@",
+      "password": "newpass",
+      "address": "cmvdhfgr",
+      "pincode": "2323",
+      "landmark": "cdbf",
+      "gender": "Female",
+      "contactNumber": "1234",
+      "gstValue": "45667",
+      "policyId": "234",
+      "brandName": "new"
+    },
+    {
+      "id": 4,
+      "username": "old user",
+      "email": "old@",
+      "password": "oldp",
+      "address": "tyuio",
+      "pincode": "45677",
+      "landmark": "dgfdflasef",
+      "gender": "Female",
+      "contactNumber": "44554554",
+      "gstValue": "34566788",
+      "policyId": "45555",
+      "brandName": "gghh"
     }
   ],
   "products": [
@@ -57,6 +115,48 @@
       "name": "Smartwatch",
       "price": 2500,
       "image": "https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw61458d43/images/Titan/Catalog/90188AP01_1.jpg?sw=600&sh=600"
+    },
+    {
+      "id": "7",
+      "name": "Tote Bag",
+      "price": "299",
+      "image": "https://m.media-amazon.com/images/I/61pY6zPghLL._SX679_.jpg",
+      "vendorId": 2
+    },
+    {
+      "id": 8,
+      "name": "Silver Plated  Ring",
+      "price": "345",
+      "image": "https://m.media-amazon.com/images/I/719zWxFSu9L._SY695_.jpg",
+      "vendorId": "2"
+    },
+    {
+      "id": 9,
+      "name": "Highlighter",
+      "price": "5678",
+      "image": "https://m.media-amazon.com/images/I/81cxVrPeeiL._SX522_.jpg",
+      "vendorId": "2"
+    },
+    {
+      "id": 10,
+      "name": "eye shadow",
+      "price": "400",
+      "image": "https://m.media-amazon.com/images/I/616kViYpgpL._SX522_.jpg",
+      "vendorId": "2"
+    },
+    {
+      "id": 11,
+      "name": "Tote Bagnew",
+      "price": "4567",
+      "image": "https://m.media-amazon.com/images/I/61pY6zPghLL._SX679_.jpg",
+      "vendorId": "2"
+    },
+    {
+      "id": 12,
+      "name": "Silver Plated  Ring",
+      "price": "7890",
+      "image": "https://m.media-amazon.com/images/I/81cxVrPeeiL._SX522_.jpg",
+      "vendorId": "2"
     }
   ]
 }
