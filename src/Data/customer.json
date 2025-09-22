@@ -9,6 +9,28 @@
       "pincode": "505172",
       "gender": "Male",
       "contactNumber": "6301641450"
+    },
+    {
+      "id": "2",
+      "username": "prasanth",
+      "email": "prasanthpoluparthi139@gmail.com",
+      "password": "123456789",
+      "address": "234",
+      "pincode": "6789760",
+      "gender": "Male",
+      "contactNumber": "4589636523",
+      "profilePic": "https://img.freepik.com/premium-photo/3d-cartoon-avatar-man-minimal-3d-character-avatar-profile_652053-2067.jpg"
+    },
+    {
+      "id": "3",
+      "username": "naga",
+      "email": "prasanth@gmail.com",
+      "password": "123456789",
+      "address": "245",
+      "pincode": "89789",
+      "gender": "Male",
+      "contactNumber": "7599631532",
+      "profilePic": "https://img.freepik.com/premium-photo/3d-cartoon-avatar-man-minimal-3d-character-avatar-profile_652053-2067.jpg"
     }
   ],
   "products": [
