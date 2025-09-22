@@ -1,44 +1,61 @@
 import React, { useState, useEffect } from "react";
 
 function VendorProductForm({ vendor, productToEdit, onClose, onSave }) {
-  const [formData, setFormData] = useState({ name: "", price: "", image: "", vendorId: vendor.id });
+  const [formData, setFormData] = useState({ name: "", price: "", image: "", id: null });
 
   useEffect(() => {
     if (productToEdit) {
       setFormData(productToEdit);
     } else {
-      setFormData({ name: "", price: "", image: "", vendorId: vendor.id });
+      setFormData({ name: "", price: "", image: "", id: null });
     }
-  }, [productToEdit, vendor.id]);
+  }, [productToEdit]);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (productToEdit) {
-        // EDIT
-        await fetch(`http://localhost:3001/products/${productToEdit.id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
-      } else {
-        // ADD
-        const res = await fetch("http://localhost:3001/products");
-        const allProducts = await res.json();
-        const nextId = allProducts.length ? Math.max(...allProducts.map(p => p.id)) + 1 : 1;
-        const newProduct = { ...formData, id: nextId };
+      // Fetch latest vendor from backend
+      const vendorRes = await fetch(`http://localhost:3001/vendors/${vendor.id}`);
+      if (!vendorRes.ok) throw new Error("Vendor not found");
+      const vendorData = await vendorRes.json();
 
-        await fetch("http://localhost:3001/products", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newProduct),
-        });
+      // Ensure products array exists
+      let updatedProducts = Array.isArray(vendorData.products) ? vendorData.products : [];
+
+      if (productToEdit) {
+        // Update existing product
+        updatedProducts = updatedProducts.map((p) =>
+          String(p.id) === String(productToEdit.id)
+            ? { ...formData, id: productToEdit.id }
+            : p
+        );
+      } else {
+        // Add new product with incremental id
+        const numericIds = updatedProducts.map((p) => Number(p.id)).filter((id) => !isNaN(id));
+        const nextId = numericIds.length ? Math.max(...numericIds) + 1 : 1;
+
+        updatedProducts.push({ ...formData, id: nextId });
       }
 
-      onSave(); 
-      onClose(); 
+      // Update the entire vendor object with PUT
+      const updateRes = await fetch(`http://localhost:3001/vendors/${vendor.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...vendorData,       // preserve other fields
+          products: updatedProducts
+        }),
+      });
+
+      if (!updateRes.ok) {
+        throw new Error("Failed to update vendor");
+      }
+
+      onSave(); // Refresh product list
+      onClose(); // Close modal
     } catch (err) {
       console.error("Error saving product:", err);
       alert("Failed to save product.");
@@ -57,17 +74,40 @@ function VendorProductForm({ vendor, productToEdit, onClose, onSave }) {
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label>Name</label>
-                <input type="text" name="name" className="form-control" value={formData.name} onChange={handleChange} required />
+                <input
+                  type="text"
+                  name="name"
+                  className="form-control"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
               </div>
               <div className="mb-3">
                 <label>Price</label>
-                <input type="number" name="price" className="form-control" value={formData.price} onChange={handleChange} required />
+                <input
+                  type="number"
+                  name="price"
+                  className="form-control"
+                  value={formData.price}
+                  onChange={handleChange}
+                  required
+                />
               </div>
               <div className="mb-3">
                 <label>Image URL</label>
-                <input type="text" name="image" className="form-control" value={formData.image} onChange={handleChange} required />
+                <input
+                  type="text"
+                  name="image"
+                  className="form-control"
+                  value={formData.image}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-              <button type="submit" className="btn btn-success w-100">{productToEdit ? "Update Product" : "Add Product"}</button>
+              <button type="submit" className="btn btn-success w-100">
+                {productToEdit ? "Update Product" : "Add Product"}
+              </button>
             </form>
           </div>
         </div>

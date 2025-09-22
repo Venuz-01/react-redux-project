@@ -12,7 +12,33 @@
       "contactNumber": "6301641450",
       "gstValue": "90",
       "policyId": "9",
-      "brandName": "RedBull"
+      "brandName": "RedBull",
+      "products": [
+        {
+          "name": "HP Laptop",
+          "price": "67799",
+          "image": "https://m.media-amazon.com/images/I/71DozMyPCBL.jpg",
+          "id": 1
+        },
+        {
+          "name": "Headphones",
+          "price": "1999",
+          "image": "https://www.portronics.com/cdn/shop/files/Portronics_Muff_M3_best_headphones_under_5000.jpg?v=1744893854",
+          "id": 2
+        },
+        {
+          "name": "Smartwatch",
+          "price": "3999",
+          "image": "https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw61458d43/images/Titan/Catalog/90188AP01_1.jpg?sw=600&sh=600",
+          "id": 3
+        },
+        {
+          "name": "IPhone 17 Pro Max",
+          "price": "111500",
+          "image": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-witb-cosmicorange-202509_FMT_WHH?wid=560&hei=744&fmt=jpeg&qlt=90&.v=NXh3OEZPWW1IYUpzT1hwc0dnVnRpNGpxQkRKUjFONlhiQkhUZXVydnkwSnRNV1RtaElLOWlibWpBaG1hcUZKYlZwRHBsN0J5WGltZHEvVEZYY0VZa3I2TGhYaGhMVkJpQ2RGWWVURTZNbXpJc0RDNGp0cUtNQmRxTjZCWlpwYmw",
+          "id": 4
+        }
+      ]
     },
     {
       "id": "2",
@@ -30,17 +56,27 @@
       "products": [
         {
           "name": "sharara set",
-          "price": "5678",
-          "image": "https://m.media-amazon.com/images/I/81cxVrPeeiL._SX522_.jpg",
-          "id": 9,
-          "vendorId": "2"
+          "price": "499",
+          "image": "https://m.media-amazon.com/images/I/616kViYpgpL._SX522_.jpg",
+          "id": 1
         },
         {
-          "name": "sharara set",
-          "price": "400",
-          "image": "https://m.media-amazon.com/images/I/616kViYpgpL._SX522_.jpg",
-          "id": 10,
-          "vendorId": "2"
+          "name": "Gold Plated Earrings",
+          "price": "799",
+          "image": "https://m.media-amazon.com/images/I/51BSQsLEbXL._SY625_.jpg",
+          "id": 2
+        },
+        {
+          "name": "Lipstick Set",
+          "price": "899",
+          "image": "https://m.media-amazon.com/images/I/61fMvdph3kL._SX522_.jpg",
+          "id": 3
+        },
+        {
+          "name": "Silver Hoop Earrings",
+          "price": "399",
+          "image": "https://m.media-amazon.com/images/I/51WlF+fnwAL._SY625_.jpg",
+          "id": 4
         }
       ]
     },
@@ -56,22 +92,11 @@
       "contactNumber": "1234",
       "gstValue": "45667",
       "policyId": "234",
-      "brandName": "new"
+      "brandName": "new",
+      "products": []
     },
     {
-      "id": 4,
-      "username": "old user",
-      "email": "old@",
-      "password": "oldp",
-      "address": "tyuio",
-      "pincode": "45677",
-      "landmark": "dgfdflasef",
-      "gender": "Female",
-      "contactNumber": "44554554",
-      "gstValue": "34566788",
-      "policyId": "45555",
-      "brandName": "gghh"
-      "id": 2,
+      "id": "4",
       "username": "prasanth",
       "email": "prasanthpoluparthi139@gmail.com",
       "password": "123456789",
@@ -82,93 +107,64 @@
       "contactNumber": "7856936212",
       "gstValue": "785",
       "policyId": "787569536",
-      "brandName": "Puma"
-    }
-  ],
-  "products": [
-    {
-      "id": "1",
-      "vendorId": 1,
-      "name": "Laptop",
-      "price": 67750,
-      "image": "https://m.media-amazon.com/images/I/71DozMyPCBL.jpg"
-    },
-    {
-      "id": "2",
-      "vendorId": 1,
-      "name": "Smartphone",
-      "price": 111500,
-      "image": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-witb-cosmicorange-202509_FMT_WHH?wid=560&hei=744&fmt=jpeg&qlt=90&.v=NXh3OEZPWW1IYUpzT1hwc0dnVnRpNGpxQkRKUjFONlhiQkhUZXVydnkwSnRNV1RtaElLOWlibWpBaG1hcUZKYlZwRHBsN0J5WGltZHEvVEZYY0VZa3I2TGhYaGhMVkJpQ2RGWWVURTZNbXpJc0RDNGp0cUtNQmRxTjZCWlpwYmw"
-    },
-    {
-      "id": "3",
-      "vendorId": 1,
-      "name": "Headphones",
-      "price": 11280,
-      "image": "https://www.portronics.com/cdn/shop/files/Portronics_Muff_M3_best_headphones_under_5000.jpg?v=1744893854"
-    },
-    {
-      "id": "4",
-      "vendorId": 1,
-      "name": "Keyboard",
-      "price": 11140,
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Apple-wireless-keyboard-aluminum-2007.jpg/1200px-Apple-wireless-keyboard-aluminum-2007.jpg"
-    },
-    {
-      "id": "5",
-      "vendorId": 1,
-      "name": "Monitor",
-      "price": 112000,
-      "image": "https://m.media-amazon.com/images/I/812vFSdY89L._UF1000,1000_QL80_.jpg"
+      "brandName": "Puma",
+      "products": [
+        {
+          "name": "Wireless Headphones",
+          "price": "2499",
+          "image": "https://m.media-amazon.com/images/I/51LxI+Cs-QL._SX522_.jpg",
+          "id": 1
+        },
+        {
+          "name": "Smartphone",
+          "price": "12599",
+          "image": "https://m.media-amazon.com/images/I/71DNpL6gk+L._SX679_.jpg",
+          "id": 2
+        },
+        {
+          "name": "Monitor",
+          "price": "29999",
+          "image": "https://m.media-amazon.com/images/I/812vFSdY89L._UF1000,1000_QL80_.jpg",
+          "id": 3
+        }
+      ]
     },
     {
       "id": "6",
-      "vendorId": 1,
-      "name": "Smartwatch",
-      "price": 2500,
-      "image": "https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw61458d43/images/Titan/Catalog/90188AP01_1.jpg?sw=600&sh=600"
+      "username": "Sameer Ali",
+      "email": "abcdef@gmail.com",
+      "password": "sameer",
+      "address": "4-19/D, Julapalli, Peddapalli",
+      "pincode": "505172",
+      "landmark": "Julapalli",
+      "gender": "Male",
+      "contactNumber": "6301641450",
+      "gstValue": "78",
+      "policyId": "11",
+      "brandName": "Adidas",
+      "products": [
+        {
+          "name": "Monitor",
+          "price": "89",
+          "image": "https://m.media-amazon.com/images/I/719zWxFSu9L._SY695_.jpg",
+          "id": 1
+        }
+      ]
     },
     {
       "id": "7",
-      "name": "Tote Bag",
-      "price": "299",
-      "image": "https://m.media-amazon.com/images/I/61pY6zPghLL._SX679_.jpg",
-      "vendorId": 2
-    },
-    {
-      "id": 8,
-      "name": "Silver Plated  Ring",
-      "price": "345",
-      "image": "https://m.media-amazon.com/images/I/719zWxFSu9L._SY695_.jpg",
-      "vendorId": "2"
-    },
-    {
-      "id": 9,
-      "name": "Highlighter",
-      "price": "5678",
-      "image": "https://m.media-amazon.com/images/I/81cxVrPeeiL._SX522_.jpg",
-      "vendorId": "2"
-    },
-    {
-      "id": 10,
-      "name": "eye shadow",
-      "price": "400",
-      "image": "https://m.media-amazon.com/images/I/616kViYpgpL._SX522_.jpg",
-      "vendorId": "2"
-    },
-    {
-      "id": 11,
-      "name": "Tote Bagnew",
-      "price": "4567",
-      "image": "https://m.media-amazon.com/images/I/61pY6zPghLL._SX679_.jpg",
-      "vendorId": "2"
-    },
-    {
-      "id": 12,
-      "name": "Silver Plated  Ring",
-      "price": "7890",
-      "image": "https://m.media-amazon.com/images/I/81cxVrPeeiL._SX522_.jpg",
-      "vendorId": "2"
+      "username": "Sameer Ali",
+      "email": "abcd@gmail.com",
+      "password": "sameer",
+      "address": "4-19/D, Julapalli, Peddapalli",
+      "pincode": "505525",
+      "landmark": "Julapalli",
+      "gender": "Male",
+      "contactNumber": "6301641450",
+      "gstValue": "90",
+      "policyId": "11",
+      "brandName": "Adidas",
+      "products": []
     }
   ]
 }

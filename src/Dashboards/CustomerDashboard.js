@@ -12,20 +12,45 @@ function CarouselComp() {
     <div id="mainCarousel" className="carousel slide mt-3" data-bs-ride="carousel">
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img src={banner7} className="d-block w-100" alt="Banner 1" style={{ height: "400px", objectFit: "cover" }} />
+          <img
+            src={banner7}
+            className="d-block w-100"
+            alt="Banner 1"
+            style={{ height: "400px", objectFit: "cover" }}
+          />
         </div>
         <div className="carousel-item">
-          <img src={banner6} className="d-block w-100" alt="Banner 2" style={{ height: "400px", objectFit: "cover" }} />
+          <img
+            src={banner6}
+            className="d-block w-100"
+            alt="Banner 2"
+            style={{ height: "400px", objectFit: "cover" }}
+          />
         </div>
         <div className="carousel-item">
-          <img src={banner5} className="d-block w-100" alt="Banner 3" style={{ height: "400px", objectFit: "cover" }} />
+          <img
+            src={banner5}
+            className="d-block w-100"
+            alt="Banner 3"
+            style={{ height: "400px", objectFit: "cover" }}
+          />
         </div>
       </div>
-      <button className="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+      <button
+        className="carousel-control-prev"
+        type="button"
+        data-bs-target="#mainCarousel"
+        data-bs-slide="prev"
+      >
         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
         <span className="visually-hidden">Previous</span>
       </button>
-      <button className="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+      <button
+        className="carousel-control-next"
+        type="button"
+        data-bs-target="#mainCarousel"
+        data-bs-slide="next"
+      >
         <span className="carousel-control-next-icon" aria-hidden="true"></span>
         <span className="visually-hidden">Next</span>
       </button>
@@ -171,12 +196,24 @@ function CustomerDashboard() {
       </nav>
 
       {/* Carousel */}
-      {/* Carousel */}
       {search.trim() === "" && <CarouselComp />}
 
-
-      {/* Feedback message */}
-      {message && <div className="alert alert-info text-center m-3 p-2">{message}</div>}
+      {/* Feedback message (scroll-proof) */}
+      {message && (
+        <div
+          className="alert alert-info text-center"
+          style={{
+            position: "fixed",
+            top: "20px",
+            right: "20px",
+            zIndex: 2000,
+            minWidth: "250px",
+            borderRadius: "8px"
+          }}
+        >
+          {message}
+        </div>
+      )}
 
       {/* Products */}
       <div className="container mt-4">
@@ -185,15 +222,26 @@ function CustomerDashboard() {
           {filteredProducts.map((p) => (
             <div key={p.id} className="col-md-4 mb-4">
               <div className="card h-100 shadow-sm">
-                <img src={p.image} alt={p.name} className="card-img-top" style={{ height: "200px", objectFit: "contain" }} />
+                <img
+                  src={p.image}
+                  alt={p.name}
+                  className="card-img-top"
+                  style={{ height: "200px", objectFit: "contain" }}
+                />
                 <div className="card-body text-center">
                   <h5 className="card-title">{p.name}</h5>
                   <p className="card-text">Price: ₹{p.price.toLocaleString("en-IN")}</p>
                   <div className="d-flex justify-content-center gap-2 mt-3">
-                    <button className="btn btn-success btn-sm" onClick={() => handleAddToCart(p)}>
+                    <button
+                      className="btn btn-success btn-sm"
+                      onClick={() => handleAddToCart(p)}
+                    >
                       <FaShoppingCart /> Add to Cart
                     </button>
-                    <button className="btn btn-warning btn-sm" onClick={() => handleSaveForLater(p)}>
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => handleSaveForLater(p)}
+                    >
                       <FaHeart /> Save for Later
                     </button>
                   </div>

@@ -71,11 +71,12 @@ function VendorRegistration() {
       }
 
       const newVendor = {
-        id: nextId,
+        id: String(nextId), // <-- ensure id is a string
         ...formData,
         username: formData.username.trim(),
         email: formData.email.trim().toLowerCase(),
         password: formData.password.trim(),
+        products: [], // always initialize empty products array
       };
 
       const res = await fetch("http://localhost:3001/vendors", {
@@ -157,7 +158,7 @@ function VendorRegistration() {
               <input type="text" name="gstValue" value={formData.gstValue} onChange={handleChange} {...inputProps} className="form-control" />
             </div>
             <div className="mb-2">
-              <label>Policy ID</label>
+              <label>Vendor ID</label>
               <input type="text" name="policyId" value={formData.policyId} onChange={handleChange} {...inputProps} className="form-control" />
             </div>
             <div className="mb-2">
@@ -217,7 +218,7 @@ function VendorRegistration() {
         ))}
       </div>
 
-      {/* Form with hover card effect */}
+      {/* Form */}
       <form
         className="p-4 border rounded"
         onSubmit={(e) => e.preventDefault()}
@@ -225,8 +226,8 @@ function VendorRegistration() {
           transition: "all 0.3s",
           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
         }}
-        onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 12px 25px rgba(0,0,0,0.25)"}
-        onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)"}
+        onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 12px 25px rgba(0,0,0,0.25)")}
+        onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)")}
       >
         {stepContent(currentStep)}
         <div className="d-flex justify-content-between mt-3">

@@ -13,15 +13,13 @@ function VendorDashboard() {
 
   const profileRef = useRef(null);
 
-  
+  // Fetch logged-in vendor's products
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:3001/products");
-      const allProducts = await res.json();
-      const vendorProducts = allProducts.filter(
-        (p) => Number(p.vendorId) === Number(vendor?.id)
-      );
-      setProducts(vendorProducts);
+      const vendorRes = await fetch(`http://localhost:3001/vendors/${vendor.id}`);
+      const vendorData = await vendorRes.json();
+      setVendor(vendorData);
+      setProducts(Array.isArray(vendorData.products) ? vendorData.products : []);
     } catch (err) {
       console.error("Error fetching products:", err);
     }
@@ -45,26 +43,25 @@ function VendorDashboard() {
     navigate("/");
   };
 
- 
+  // Delete product from vendor's products array
   const handleDelete = async (id) => {
     try {
-    
-      await fetch(`http://localhost:3001/products/${id}`, { method: "DELETE" });
-
-      
       const vendorRes = await fetch(`http://localhost:3001/vendors/${vendor.id}`);
       const vendorData = await vendorRes.json();
+
       const updatedVendor = {
         ...vendorData,
-        products: (vendorData.products || []).filter((p) => p.id !== id),
+        products: (vendorData.products || []).filter((p) => String(p.id) !== String(id)),
       };
+
       await fetch(`http://localhost:3001/vendors/${vendor.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedVendor),
       });
 
-      fetchProducts();
+      setVendor(updatedVendor);
+      setProducts(updatedVendor.products);
     } catch (err) {
       console.error("Error deleting product:", err);
     }
@@ -74,7 +71,6 @@ function VendorDashboard() {
     p.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (profileRef.current && !profileRef.current.contains(e.target)) {

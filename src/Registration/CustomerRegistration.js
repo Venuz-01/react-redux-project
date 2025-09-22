@@ -13,8 +13,7 @@ function CustomerRegistration() {
     address: "",
     pincode: "",
     gender: "",
-    contactNumber: "",
-    profilePic: "https://img.freepik.com/premium-photo/3d-cartoon-avatar-man-minimal-3d-character-avatar-profile_652053-2067.jpg"
+    contactNumber: ""
   });
 
   const handleChange = (e) => {
